@@ -1,17 +1,21 @@
+use std::io;
+
 fn main() {
-    // let mut x = 5;
-    // println!("The value of x is: {x}");
-    // x = 6;
-    // println!("The value of x is: {x}");
+    println!("Convert tmperature from Farenhait to Celsius.");
+    println!("Input temperature in Celsius: ");
 
-    let x = 5;
+    let mut tmp = String::new();
 
-    let x = x + 1;
+    io::stdin()
+        .read_line(&mut tmp)
+        .expect("Wrong input!");
 
-    {
-        let x = x * 2;
-        println!("The value of x in the inner scope: {x}");
-    }
+    let tmp: i32 = tmp.trim().parse().expect("Type a number.");
 
-    println!("The value of x is: {x}");
+    let tmp_c = convert_to_celsius(tmp);
+    println!("{tmp_c}");
+}
+
+fn convert_to_celsius (tmp: i32) -> i32 {
+    (tmp - 32) * 5 / 9
 }
