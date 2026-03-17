@@ -1,37 +1,34 @@
-use std::io;
+const DAYS: [&str; 12] = [
+    "first", "second", "third", "fourth", "fifth", "sixth",
+    "seventh", "eigth", "ninth", "tenth", "eleventh", "twelfth",
+];
+
+const PRESENTS: [&str; 12] = [
+    "partridge in a pear tree", "turtle doves", "French hens",
+    "calling birds", "gold rings", "geese a-laying",
+    "swans a-swimming", "maids a-milking", "ladies dancing",
+    "lords a-leaping", "pipers piping", "drummers drumming"
+];
+
+const NUMBERS: [&str; 12] = [
+    "One", "Two", "Three", "Four", "Five", "Six",
+    "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"
+];
 
 fn main() {
-    println!{"Fibonacci"};
-    println!{"Put number for fib: "};
+    let mut day = 1;
+    while day <= 12 {
+        println!("On the {} day of Christmas my true love sent to me", DAYS[day-1]);
 
-    let mut input = String::new();
-    let mut num: u32 = 0;
+        let mut pres_num = 1;
+        while pres_num < day{
+            println!("{} {}",NUMBERS[day - pres_num], PRESENTS[day - pres_num]);
+            pres_num += 1;
+        }
 
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Wrong input!");
+        let prefix = if day == 1 {"A"} else {"And a"};
+        println!("{prefix} {}.\n", PRESENTS[0]);
 
-    num = input.trim().parse().expect("Wrong input");
-
-    let res: u128 = get_fib(num);
-    println!("Fibonacci of {num}  = {res}");
-}
-
-fn get_fib(n: u32) -> u128 {
-    let mut first: u128 = 0;
-    let mut second: u128 = 1;
-    let mut res: u128 = 0;
-
-    if n == 0 { return 0 }
-    else if n == 1 { return 1 }
-
-    let mut i = 2;
-
-    while i <= n {
-        res = first + second;
-        first = second;
-        second = res;
-        i = i + 1;
+        day += 1;
     }
-    res
 }
