@@ -1,25 +1,30 @@
-use std::collections::HashMap;
+// Convert strings to Pig Latin.
+// The first consonant of each word is moved to the end of the word and ay is added, so first becomes irst-fay.
+// Words that start with a vowel have hay added to the end instead (apple becomes apple-hay).
+// Keep in mind the details about UTF-8 encoding!
 
-const NUMBERS: [i32; 12] = [
-    1, 25, 22, 9, 22, -138, 999, -111, 22, -10, 1, -12
-];
+use std::io;
 
 fn main() {
-    let mut nums = Vec::from(NUMBERS);
-    let mut map = HashMap::new();
+    println!("Input one word: ");
 
-    nums.sort();
-    println!("mediana = {}", nums[nums.len()/2]);
+    let mut user_input = String::new();
 
-    for num in nums{
-        let count = map.entry(num).or_insert(0);
-        *count += 1;
-    }
-    println!("{map:?}");
+    io::stdin().read_line(&mut user_input).expect("Error in user input");
 
-    let mut hash_vec: Vec<(&i32, &i32)> = map.iter().collect();
-    hash_vec.sort_by(|a,b| b.1.cmp(a.1));
+    let word = format!("{}-{}",&user_input.trim()[1..], &user_input[..1]);
 
-    println!("Sorted by value: {:?}", hash_vec);
-    println!("Mode: {}", hash_vec[0].0);
+    println!("{word}");
 }
+
+//-------------------------------------------------------------//
+
+fn safe_slice(s: &str, char_count: usize) -> &str {
+    match s.char_indices().nth(char_count) {
+        Some((byte_idx, _)) => &s[..byte_idx],
+        None => s, // Вернуть всю строку, если символов меньше
+    }
+}
+
+let text = "Rust🦀";
+let part = safe_slice(text, 4); // -> "Rust"
