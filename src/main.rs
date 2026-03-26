@@ -6,6 +6,12 @@
 use std::io;
 
 fn main() {
+    println!("Select language:");
+    println!("English - 1");
+    println!("Русский - 2");
+
+    // TODO Enum for langs. Обработка ввода и установление значения переменной языка
+    //
     println!("Input one word: ");
 
     let mut user_input = String::new();
@@ -30,4 +36,8 @@ fn safe_tail_slice(s: &str, first_char: usize) -> &str {
         Some((byte_idx, _)) => &s[byte_idx..],
         None => s, // Вернуть всю строку, если символов меньше
     }
+}
+
+fn is_vowel(c: char) -> bool {
+    matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U')
 }
