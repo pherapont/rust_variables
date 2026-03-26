@@ -12,12 +12,11 @@ fn main() {
 
     io::stdin().read_line(&mut user_input).expect("Error in user input");
 
-    let word = format!("{}-{}",&user_input.trim()[1..], &user_input[..1]);
+    let word = format!("{}-{}",safe_tail_slice(&user_input.trim(), 1), safe_slice(&user_input.trim(), 1));
 
     println!("{word}");
 }
 
-//-------------------------------------------------------------//
 
 fn safe_slice(s: &str, char_count: usize) -> &str {
     match s.char_indices().nth(char_count) {
@@ -26,5 +25,9 @@ fn safe_slice(s: &str, char_count: usize) -> &str {
     }
 }
 
-let text = "Rust🦀";
-let part = safe_slice(text, 4); // -> "Rust"
+fn safe_tail_slice(s: &str, first_char: usize) -> &str {
+    match s.char_indices().nth(first_char) {
+        Some((byte_idx, _)) => &s[byte_idx..],
+        None => s, // Вернуть всю строку, если символов меньше
+    }
+}
