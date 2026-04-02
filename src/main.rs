@@ -6,38 +6,47 @@
 use std::io;
 
 fn main() {
-    println!("Select language:");
-    println!("English - 1");
-    println!("Русский - 2");
-
-    // TODO Enum for langs. Обработка ввода и установление значения переменной языка
-    //
     println!("Input one word: ");
 
     let mut user_input = String::new();
 
-    io::stdin().read_line(&mut user_input).expect("Error in user input");
+    io::stdin()
+        .read_line(&mut user_input)
+        .expect("Error in user input");
 
-    let word = format!("{}-{}",safe_tail_slice(&user_input.trim(), 1), safe_slice(&user_input.trim(), 1));
+    let first_ch = &user_input.trim().chars().next().expect("String is empty");
+
+    let word = if is_vowel(first_ch) {
+        format!("{}-hay", &user_input.trim())
+    } else {
+        format!(
+            "{}-{}ay",
+            get_tail_slice(&user_input.trim(), 1),
+            get_slice(&user_input.trim(), 1)
+        )
+    };
 
     println!("{word}");
 }
 
-
-fn safe_slice(s: &str, char_count: usize) -> &str {
+fn get_slice(s: &str, char_count: usize) -> &str {
     match s.char_indices().nth(char_count) {
         Some((byte_idx, _)) => &s[..byte_idx],
         None => s, // Вернуть всю строку, если символов меньше
     }
 }
 
-fn safe_tail_slice(s: &str, first_char: usize) -> &str {
+fn get_tail_slice(s: &str, first_char: usize) -> &str {
     match s.char_indices().nth(first_char) {
         Some((byte_idx, _)) => &s[byte_idx..],
         None => s, // Вернуть всю строку, если символов меньше
     }
 }
 
-fn is_vowel(c: char) -> bool {
-    matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U')
+fn is_vowel(c: &char) -> bool {
+    if matches!(c, 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U') {
+        true
+    } else {
+        false
+    }
 }
