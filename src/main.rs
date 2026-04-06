@@ -3,10 +3,10 @@
 // Then, let the user retrieve a list of all people in a department or all people in the company by
 // department, sorted alphabetically.
 
+// TODO get_person implementation
+//
 use std::collections::HashMap;
 use std::io;
-
-// TODO добавить Action::Exit
 
 enum Action {
     Update,
@@ -40,10 +40,16 @@ fn get_person(department: &str) -> String {
 }
 
 fn get_department(employes: &HashMap<String, Vec<String>>) -> String {
-    "Engineering".to_string()
+    println!("Выберите отделение или создайте новое.");
+    for key in employes.keys() {
+        println!("{key}");
+    }
+    let mut department = String::new();
+    io::stdin()
+        .read_line(&mut department)
+        .expect("Uncorrekt input!");
+    department.trim().to_string()
 }
-
-// TODO создать цикл обработки ввода и спаршивать пока не будет правильный ввод (while)
 
 fn update_or_look() -> Action {
     loop {
@@ -59,9 +65,11 @@ fn update_or_look() -> Action {
             "1" => return Action::Update,
             "2" => return Action::Look,
             "q" => return Action::Exit,
-            _ => {println!("-----------------------------");
+            _ => {
+                println!("-----------------------------");
                 println!("Выбрано недопустимое действие!\n");
-                continue;},
-            };
-        }
+                continue;
+            }
+        };
     }
+}
