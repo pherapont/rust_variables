@@ -3,8 +3,6 @@
 // Then, let the user retrieve a list of all people in a department or all people in the company by
 // department, sorted alphabetically.
 
-// TODO get_person implementation
-//
 use std::collections::HashMap;
 use std::io;
 
@@ -18,7 +16,7 @@ fn main() {
     let mut employes: HashMap<String, Vec<String>> = HashMap::new();
 
     loop {
-        let user_aciton: Action = update_or_look();
+        let user_aciton: Action = get_action();
 
         match user_aciton {
             Action::Update => {
@@ -36,7 +34,13 @@ fn main() {
 }
 
 fn get_person(department: &str) -> String {
-    "Иванов".to_string()
+    println!("Добавьте фамилию сотрудника в отдел {}.", department);
+    let mut input_empl = String::new();
+    io::stdin()
+        .read_line(&mut input_empl)
+        .expect("Wrong input.");
+
+    input_empl.trim().to_string()
 }
 
 fn get_department(employes: &HashMap<String, Vec<String>>) -> String {
@@ -51,7 +55,7 @@ fn get_department(employes: &HashMap<String, Vec<String>>) -> String {
     department.trim().to_string()
 }
 
-fn update_or_look() -> Action {
+fn get_action() -> Action {
     loop {
         let mut input = String::new();
 
