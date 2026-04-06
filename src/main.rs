@@ -3,6 +3,7 @@
 // Then, let the user retrieve a list of all people in a department or all people in the company by
 // department, sorted alphabetically.
 
+use core::num;
 use std::collections::HashMap;
 use std::io;
 
@@ -11,6 +12,7 @@ use std::io;
 enum Action {
     Update,
     Look,
+    Exit,
 }
 
 fn main() {
@@ -29,6 +31,7 @@ fn main() {
             Action::Look => {
                 println!("{:#?}", employes);
             }
+            Action::Exit => break,
         }
     }
 }
@@ -44,16 +47,27 @@ fn get_department(employes: &HashMap<String, Vec<String>>) -> String {
 // TODO создать цикл обработки ввода и спаршивать пока не будет правильный ввод (while)
 
 fn update_or_look() -> Action {
-    println!("Выберите действие:");
-    println!("1: Добавление работника в список,");
-    println!("2: Просмотр списка работников.");
+    loop {
+        let mut input = String::new();
 
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).expect("Wrong input!");
+        println!("Выберите действие:");
+        println!("1: Добавление работника в список,");
+        println!("2: Просмотр списка работников.");
+        println!("q: Завершение работы программы.");
+        io::stdin().read_line(&mut input).expect("Wrong input!");
+        println!("{}", input);
+
+        let input: u32 = input.trim().parse(){
+            Ok(num) => num,
+
+        }
+    }
+
 
     match input.trim() {
         "1" => Action::Update,
         "2" => Action::Look,
-        _ => Action::Look,
+        "q" => Action::Exit,
+        _ => Action::Exit,
     }
 }
