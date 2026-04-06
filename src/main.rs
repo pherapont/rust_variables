@@ -3,7 +3,6 @@
 // Then, let the user retrieve a list of all people in a department or all people in the company by
 // department, sorted alphabetically.
 
-use core::num;
 use std::collections::HashMap;
 use std::io;
 
@@ -55,19 +54,14 @@ fn update_or_look() -> Action {
         println!("2: Просмотр списка работников.");
         println!("q: Завершение работы программы.");
         io::stdin().read_line(&mut input).expect("Wrong input!");
-        println!("{}", input);
 
-        let input: u32 = input.trim().parse(){
-            Ok(num) => num,
-
+        match input.trim() {
+            "1" => return Action::Update,
+            "2" => return Action::Look,
+            "q" => return Action::Exit,
+            _ => {println!("-----------------------------");
+                println!("Выбрано недопустимое действие!\n");
+                continue;},
+            };
         }
     }
-
-
-    match input.trim() {
-        "1" => Action::Update,
-        "2" => Action::Look,
-        "q" => Action::Exit,
-        _ => Action::Exit,
-    }
-}
