@@ -26,11 +26,45 @@ fn main() {
                 depart_employes.push(person);
             }
             Action::Look => {
-                println!("{:#?}", employes);
+                // println!("{:#?}", employes);
+                data_output(&employes);
             }
             Action::Exit => break,
         }
     }
+}
+
+fn data_output(employes: &HashMap<String, Vec<String>>) {
+    println!("Вывести сотрудников одного отдела: 1,");
+    println!("Вывести сотрудников всего предприятия: 2,");
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).expect("Wrong input!");
+
+    match input.trim() {
+        "1" => department_output(&employes),
+        "2" => company_output(&employes),
+        _ => {
+            println!("Неверное задание. Вывод всего предприятия.");
+            company_output(&employes);
+        }
+    }
+}
+
+// TODO создать копию списка для сортировки
+
+fn company_output(employes: &HashMap<String, Vec<String>>) {
+    for department in employes.values() {
+        let mut depart_copy = department.iter().copied();
+        department.sort();
+        for person in department {
+            println!("{person}");
+        }
+    }
+}
+
+fn department_output(employes: &HashMap<String, Vec<String>>) {
+    todo!()
 }
 
 fn get_person(department: &str) -> String {
