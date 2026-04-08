@@ -51,20 +51,40 @@ fn data_output(employes: &HashMap<String, Vec<String>>) {
     }
 }
 
-// TODO создать копию списка для сортировки
-
 fn company_output(employes: &HashMap<String, Vec<String>>) {
+    let mut company_persons = Vec::new();
     for department in employes.values() {
-        let mut depart_copy = department.iter().copied();
-        department.sort();
-        for person in department {
-            println!("{person}");
-        }
+        company_persons.extend(department);
     }
+    company_persons.sort();
+    println!("\n---COMPANY---");
+    for person in company_persons {
+        println!("{person}");
+    }
+    println!("---END---\n");
 }
 
 fn department_output(employes: &HashMap<String, Vec<String>>) {
-    todo!()
+    println!("Выберите отдел для вывода сотрудников.");
+    for depart in employes.keys() {
+        println!("{}", depart);
+    }
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).expect("Wrong input!");
+    let dep = input.trim();
+    let persons = employes.get(dep);
+    match persons {
+        Some(data) => {
+            println!("\n---{}---", dep);
+            let mut data_out = data.clone();
+            data_out.sort();
+            for person in data_out {
+                println!("{person}")
+            }
+            println!("---END---\n");
+        }
+        None => println!("Неверно указан отдел!"),
+    }
 }
 
 fn get_person(department: &str) -> String {
